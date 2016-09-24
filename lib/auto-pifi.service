@@ -1,0 +1,5 @@
+[Unit]
+Description=Automatic Pi Wifi Hotspot
+
+[Service]
+ExecStart=/usr/lib/systemd/scripts/auto-pifi

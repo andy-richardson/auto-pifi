@@ -1,0 +1,10 @@
+[Unit]
+Description=Check for failed network and hotspot
+
+[Timer]
+OnBootSec=15
+OnUnitActiveSec=15
+Unit=auto-pifi.service
+
+[Install]
+WantedBy=timers.target
