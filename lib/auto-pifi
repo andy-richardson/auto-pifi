@@ -2,8 +2,8 @@
 
 # Determine if pi has IP
 networkConnected() {
-  WLAN0=$(ifconfig wlan0 | grep inet)
-  ETH0=$(ifconfig eth0 | grep inet)
+  WLAN0=$(ip link ls dev wlan0 | grep "state UP")
+  ETH0=$(ip link ls dev eth0 | grep "state UP")
 
   if [ "$ETH0" = "" ] && [ "$WLAN0" = "" ]; then
     return 1  # False
@@ -30,4 +30,3 @@ if ! networkConnected && ! broadcasting; then
     $(systemctl start hostapd)
   fi
 fi
-
