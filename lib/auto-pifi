@@ -12,21 +12,10 @@ networkConnected() {
   fi
 }
 
-# Determine if pi is broadcasting
-broadcasting() {
-  STATUS=$(systemctl status hostapd | grep inactive)
-
-  if [ "$STATUS" = "" ]; then
-    return 0  # True
-  else
-    return 1  # False
-  fi
-}
-
 # Check for 10s of downtime
-if ! networkConnected && ! broadcasting; then
+if ! networkConnected; then
   sleep 10
-  if ! networkConnected && ! broadcasting; then
-    $(create_ap -n pifi password)
+  if ! networkConnected; then
+    $(create_ap -n wlan0 pifi password --no-virt)
   fi
 fi
