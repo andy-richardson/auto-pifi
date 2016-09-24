@@ -27,6 +27,6 @@ broadcasting() {
 if ! networkConnected && ! broadcasting; then
   sleep 10
   if ! networkConnected && ! broadcasting; then
-    $(systemctl start hostapd)
+    $(create_ap -n pifi password)
   fi
 fi
