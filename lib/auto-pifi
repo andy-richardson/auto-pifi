@@ -1,0 +1,36 @@
+#!/bin/bash
+
+# Determine if pi has IP
+networkConnected() {
+  # Stub
+  return 1
+
+  WLAN0=$(ifconfig wlan0 | grep inet)
+  ETH0=$(ifconfig eth0 | grep inet)
+
+  if [ "$ETH0" = "" ] && [ "$WLAN0" = "" ]; then
+    return 1  # False
+  else
+    return 0  # True
+  fi
+}
+
+# Determine if pi is broadcasting
+broadcasting() {
+  STATUS=$(systemctl status hostapd | grep inactive)
+
+  if [ "$STATUS" = "" ]; then
+    return 0  # True
+  else
+    return 1  # False
+  fi
+}
+
+# Check for 10s of downtime
+if ! networkConnected && ! broadcasting; then
+  sleep 10
+  if ! networkConnected && ! broadcasting; then
+    $(systemctl start hostapd)
+  fi
+fi
+
